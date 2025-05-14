@@ -1,0 +1,259 @@
+
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MSS_Data_Server.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MSS_Data_Server.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Сервер данных МСС">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<Style Selector="Window">
+			<Setter Property="FontSize" Value="12" />
+		</Style>
+		<Style Selector="Border.outline">
+			<Setter Property="BorderBrush" Value="LightGray"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="CornerRadius" Value="2"/>
+		</Style>
+		<Style Selector="MenuItem">
+			<Setter Property="Height" Value="28"/>
+		</Style>
+
+	</Window.Styles>
+
+	<DockPanel LastChildFill="True">
+		
+		<!-- Главное меню -->
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="_Файл">
+				<MenuItem Name="newWell">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Новая скважина"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares:/Assets/Icons/wellNew.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Name="infoWell">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Информация о скважине"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares:/Assets/Icons/wellInfo.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Name="closeWell">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Завершить скважину"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares:/Assets/Icons/wellClose.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<Separator/>
+				<MenuItem Name="drillingRoundNew">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Новый рейс"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares:/Assets/Icons/drillingRoundStart.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Name="drillingRoundInfo">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Информация о рейсе"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares:/Assets/Icons/drillingRoundInfo.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Name="drillingRoundClose">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Завершить рейс"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares:/Assets/Icons/drillingRoundFinish.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Name="drillingRoundEdit">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Редактирование рейсов"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares:/Assets/Icons/drillingRoundEdit.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<Separator/>
+				<MenuItem Name="exitApp">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Выход"/>
+					</MenuItem.Header>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem Header="_Регистрация">
+				<MenuItem IsEnabled="{Binding !Drilling}" Name="drillingRun" Command="{Binding HandleDrillingRunStopClick}">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Запуск регистрации"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares://MSS Data Server/Assets/Icons/drillingRun.png" />
+					</MenuItem.Icon>
+					
+				</MenuItem>
+				<MenuItem IsEnabled="{Binding Drilling}" Name="drillingStop" Command="{Binding HandleDrillingRunStopClick}">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Остановка регистрации"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares://MSS Data Server/Assets/Icons/drillingStop.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<Separator/>
+				<MenuItem Name="drillingParams">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Параметры"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares://MSS Data Server/Assets/Icons/drillingParams.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Name="drillingSettings">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Настройки"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares://MSS Data Server/Assets/Icons/drillingSettings.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Name="drillingTimeSync">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="Синхронизация времени"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares://MSS Data Server/Assets/Icons/timeSync.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem Header="_Инструменты">
+				<MenuItem />	
+			</MenuItem>
+			
+			<MenuItem Header="_Помощь">
+				<MenuItem Name="helpUserManual">
+					<MenuItem.Header>							
+						<TextBlock FontSize="12" Text="Руководство пользователя"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares://MSS Data Server/Assets/Icons/userManual.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Name="helpAbout" HotKey="Ctrl+A">
+					<MenuItem.Header>
+						<TextBlock FontSize="12" Text="О программе"/>
+					</MenuItem.Header>
+					<MenuItem.Icon>
+						<Image Width="24" Height="24" Source="avares://MSS Data Server/Assets/Icons/about.png"/>
+					</MenuItem.Icon>
+				</MenuItem>
+			</MenuItem>
+		</Menu>
+		
+		<!-- StatusBar -->
+		<Border DockPanel.Dock="Bottom"
+			Padding="4" 
+			Margin="2"
+		>
+			<StackPanel Height="16" Orientation="Horizontal">
+				<TextBlock IsVisible="{Binding Drilling}" Width="70" TextAlignment="Center" Text="Регистрация" Foreground="LimeGreen" FontSize="12" ToolTip.Tip="Статус регистрации"/>
+				<TextBlock IsVisible="{Binding !Drilling}" Width="70" TextAlignment="Center" Text="Ожидание" FontSize="12" ToolTip.Tip="Статус регистрации"/>
+				<TextBlock Text="|" FontSize="12" Margin="4,0" Foreground="LightGray"/>
+				<TextBlock Text="ProxyServer" FontSize="12" Foreground="LimeGreen" ToolTip.Tip="Связь с ProxyServer"/>
+				<TextBlock Text="|" FontSize="12" Margin="4,0" Foreground="LightGray"/>
+				<TextBlock Text="{Binding TimerText}"/>
+				
+			</StackPanel>	
+		</Border>
+		
+		<!-- Основное поле -->
+		<Border Classes="outline">
+			
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*" MinWidth="200"/>
+				<ColumnDefinition Width="1"/>
+				<ColumnDefinition Width="4*" MinWidth="200"/>
+			</Grid.ColumnDefinitions>
+
+			<Grid Grid.Column="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="2*" MinHeight="150"/>
+					<RowDefinition Height="1"/>
+					<RowDefinition Height="2*" MinHeight="150"/>
+				</Grid.RowDefinitions>
+
+				<Border Classes="outline" Margin="2,2,2,2">
+					<TreeView Grid.Row="0" FontSize="12">
+						<TreeViewItem Header="Линия 1">
+							<TreeViewItem Header="МСД-211 [Адрес 101]">
+								<TreeViewItem Header="ДПА-317">
+									<TreeViewItem Header="Плотность в емк. 1"/>
+								</TreeViewItem>
+								<TreeViewItem Header="ДПА-317">
+									<TreeViewItem Header="Плотность в емк. 2"/>
+								</TreeViewItem>
+								<TreeViewItem Header="ДПА-317">
+									<TreeViewItem Header="Плотность в емк. 3"/>
+								</TreeViewItem>
+							</TreeViewItem>
+						</TreeViewItem>
+						<TreeViewItem Header="Линия 2">
+							<TreeViewItem Header="МСД-211 [Адрес 102]">
+								<TreeViewItem Header="ДММК-313"/>
+							</TreeViewItem>
+							<TreeViewItem Header="МСД-211 [Адрес 103]">
+								<TreeViewItem Header="ДВД-311"/>
+							</TreeViewItem>
+							
+						</TreeViewItem>
+					</TreeView>
+				</Border>
+				
+				<GridSplitter Grid.Row="1" Background="DarkGray" ResizeDirection="Rows" Height="2" />
+				<ListBox Grid.Row="1" FontSize="12">
+					<ListBoxItem>
+						<TextBlock Text="11111111111" />
+					</ListBoxItem>
+					<ListBoxItem>
+						<TextBlock Text="22222222222" />
+					</ListBoxItem>
+					
+				</ListBox>
+			</Grid>
+			
+			<GridSplitter Grid.Column="1" Background="DarkGray" ResizeDirection="Columns" Width="2" />
+
+			<TabControl Grid.Column="2">
+				<TabItem Header="Журнал"/>
+				<TabItem Header="Диаграммы"/>
+				
+			</TabControl>
+			
+		</Grid>
+		</Border>
+	</DockPanel>
+
+		
+
+	
+
+</Window>
